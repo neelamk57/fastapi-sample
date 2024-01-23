@@ -2,7 +2,8 @@ from fastapi import FastAPI, Request
 from pydantic import BaseModel
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
-
+from starlette.middleware.sessions import SessionMiddleware
+import auth
 
 app = FastAPI()
 
@@ -17,8 +18,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-
+app.include_router(auth.router)
+app.add_middleware(SessionMiddleware, secret_key='qrdssrf2fgt')
 
 @app.get("/api")
 async def autocomplete():
