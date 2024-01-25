@@ -9,7 +9,7 @@ from authlib.integrations.starlette_client import OAuth
 CLIENT_ID = '663515348764-tjaudng253e4ogmu9k1hoo59knmg90bq.apps.googleusercontent.com'
 CLIENT_SECRET = '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'
 # REDIRECT_URI = "https://localhost:8001/auth"
-REDIRECT_URI= "https://oauth.wiseyak.com/v1/auth"
+REDIRECT_URI= "https://oauth.wiseyak.com/auth"
 
 
 
