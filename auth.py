@@ -9,7 +9,7 @@ from authlib.integrations.starlette_client import OAuth
 CLIENT_ID = '663515348764-tjaudng253e4ogmu9k1hoo59knmg90bq.apps.googleusercontent.com'
 CLIENT_SECRET = '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'
 # REDIRECT_URI = "https://localhost:8001/auth"
-REDIRECT_URI= "https://oauth.wiseyak.com/auth"
+# REDIRECT_URI= "https://oauth.wiseyak.com/auth"
 
 
 
@@ -21,7 +21,7 @@ oauth.register(
     client_secret=CLIENT_SECRET,
     client_kwargs={
         'scope': 'openid profile email',
-        'redirect_uri': REDIRECT_URI
+        'redirect_uri': None
     }  
 )
 
@@ -30,12 +30,21 @@ router = APIRouter()
 
 
 
+# @router.get("/login")
+# async def login(request: Request):
+#     request.session.clear()
+#     url = request.url_for('auth')
+#     print(f"Authorization URL: {url}")
+#     return await oauth.google.authorize_redirect(request, url)
+
 @router.get("/login")
 async def login(request: Request):
     request.session.clear()
-    url = request.url_for('auth')
+    redirect_uri = request.url_for('auth')
+    oauth.google.client_kwargs['redirect_uri'] = redirect_uri
+    url, _ = await oauth.google.create_authorization_url()
     print(f"Authorization URL: {url}")
-    return await oauth.google.authorize_redirect(request, url)
+    return await oauth.google.authorize_redirect(request)
 
 
 @router.get('/auth')

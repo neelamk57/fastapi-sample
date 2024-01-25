@@ -8,7 +8,7 @@ services:
     ports:
       - "8001:8001"
     environment:
-      - REDIRECT_URI=http://oauth.wiseyak.com/auth
+      # - REDIRECT_URI=http://oauth.wiseyak.com/auth
       # - REDIRECT_URI=https://oauth.wiseyak.com/v1/auth
       - CLIENT_ID=663515348764-tjaudng253e4ogmu9k1hoo59knmg90bq.apps.googleusercontent.com
       - CLIENT_SECRET=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
