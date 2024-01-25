@@ -21,7 +21,6 @@ oauth.register(
     client_secret=CLIENT_SECRET,
     client_kwargs={
         'scope': 'openid profile email',
-        'redirect_uri': None
     }  
 )
 
@@ -40,11 +39,12 @@ router = APIRouter()
 @router.get("/login")
 async def login(request: Request):
     request.session.clear()
+    # Dynamically set the redirect_uri based on the 'auth' route
     redirect_uri = request.url_for('auth')
     oauth.google.client_kwargs['redirect_uri'] = redirect_uri
-    url, _ = await oauth.google.create_authorization_url()
-    print(f"Authorization URL: {url}")
+    # Perform the OAuth authorization redirect
     return await oauth.google.authorize_redirect(request)
+
 
 
 @router.get('/auth')
