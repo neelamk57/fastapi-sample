@@ -8,8 +8,9 @@ from authlib.integrations.starlette_client import OAuth
 
 CLIENT_ID = '663515348764-tjaudng253e4ogmu9k1hoo59knmg90bq.apps.googleusercontent.com'
 CLIENT_SECRET = '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'
-REDIRECT_URI = 'http://localhost:8001/v1/auth'
-REDIRECT_FRONTEND = 'http://localhost:3000'
+# REDIRECT_URI = "https://localhost:8001/auth"
+REDIRECT_URI= "https://oauth.wiseyak.com/v1/auth"
+
 
 
 oauth = OAuth()
@@ -31,7 +32,9 @@ router = APIRouter()
 
 @router.get("/login")
 async def login(request: Request):
+    request.session.clear()
     url = request.url_for('auth')
+    print(f"Authorization URL: {url}")
     return await oauth.google.authorize_redirect(request, url)
 
 
