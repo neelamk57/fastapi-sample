@@ -4,11 +4,13 @@ FROM python:3.10.12
 # Set the working directory in the container
 WORKDIR /app
 
+RUN pip install --upgrade pip
+
 # Copy the dependencies file to the working directory
 COPY requirements.txt .
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install -r requirements.txt
 
 # Copy the content of the local src directory to the working directory
 COPY . .
@@ -23,7 +25,7 @@ EXPOSE 8001
 # CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "443", "--ssl-keyfile", "/app/ssl/key.pem", "--ssl-certfile", "/app/ssl/cert.pem"]
 
 # Command to run the application
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8001", "--proxy-headers"]
 
 
 
